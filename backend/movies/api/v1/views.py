@@ -1,15 +1,15 @@
 from django.contrib.postgres.aggregates import ArrayAgg
 from django.http import JsonResponse
 from django.views.generic.list import BaseListView
+from django.views.generic.detail import BaseDetailView
 from django.db.models import Q
 
 from movies.models import Filmwork
 
 
-class MoviesListApi(BaseListView):
+class MoviesMixinApi:
     model = Filmwork
     http_method_names = ['get']
-    paginate_by = 50
 
     def get_queryset(self):
         qs = Filmwork.objects.prefetch_related('genres', 'persons')
@@ -35,6 +35,13 @@ class MoviesListApi(BaseListView):
             'directors'
         )
 
+    def render_to_response(self, context, **response_kwargs):
+        return JsonResponse(context)
+
+
+class MoviesListApi(MoviesMixinApi, BaseListView):
+    paginate_by = 50
+
     def get_context_data(self, *, object_list=None, **kwargs):
         queryset = self.get_queryset()
         paginator, page, queryset, _ = self.paginate_queryset(queryset, self.paginate_by)
@@ -47,5 +54,7 @@ class MoviesListApi(BaseListView):
         }
         return context
 
-    def render_to_response(self, context, **response_kwargs):
-        return JsonResponse(context)
+
+class MoviesDetailApi(MoviesMixinApi, BaseDetailView):
+    def get_context_data(self, *, object_list=None, **kwargs):
+        return kwargs['object']
