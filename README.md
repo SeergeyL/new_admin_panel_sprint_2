@@ -8,3 +8,29 @@
 Напоминаем, что все части работы нужно сдавать на ревью одновременно.
 
 Успехов!
+
+# Запуск контейнеров
+Скопировать содержимое .env.example в .env перед запуском
+```bash
+cp .env.example .env
+```
+
+Запуск контейнеров
+```bash
+make compose-up-detached
+```
+
+Собрать статику
+```bash
+make django-collectstatic
+```
+
+Выполнить миграции
+```bash
+make django-migrate
+```
+
+Создать супер пользователя
+```bash
+make django-createsuperuser
+```
