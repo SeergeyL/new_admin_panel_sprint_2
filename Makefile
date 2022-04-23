@@ -14,4 +14,4 @@ django-collectstatic:
 	sudo docker-compose exec backend python3 manage.py collectstatic --noinput
 
 django-createsuperuser:
-	sudo docker-compose exec backend python3 maange.py createsuperuser
+	sudo docker-compose exec backend python3 manage.py createsuperuser
