@@ -25,6 +25,11 @@ make compose-up-detached
 make django-collectstatic
 ```
 
+Доступ к shell postgres. В базе должна быть создана схема **content**
+``` bash
+make postgres-shell
+```
+
 Выполнить миграции
 ```bash
 make django-migrate
